@@ -12,7 +12,7 @@ const tableData = {
     { id: "1", name: "John Doe", age: 25, isStudent: true },
     { id: "2", name: "Jane Smith", age: 30, isStudent: false },
     { id: "3", name: "Alice Johnson", age: 22, isStudent: true },
-    { id: "4", name: "Bob Brown", age: 28, isStudent: false },
+    { id: "5", name: "Bob Brown", age: 28, isStudent: false },
   ],
 };
 
