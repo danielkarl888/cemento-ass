@@ -4,24 +4,31 @@ import EditableTable from "./components/EditableTable";
 // Define sample data
 const tableData = {
   columns: [
-    { id: "name", ordinalNo: 1, title: "Name", type: "string" },
+    { id: "name", ordinalNo: 1, title: "Name", type: "text" },
     { id: "age", ordinalNo: 2, title: "Age", type: "number" },
-    { id: "isStudent", ordinalNo: 3, title: "Student", type: "boolean" },
+    { id: "active", ordinalNo: 3, title: "Active", type: "boolean" },
+    {
+      id: "role",
+      ordinalNo: 4,
+      title: "Role",
+      type: "select",
+      options: ["Admin", "User", "Guest"],
+    },
   ],
   data: [
-    { id: "1", name: "John Doe", age: 25, isStudent: true },
-    { id: "2", name: "Jane Smith", age: 30, isStudent: false },
-    { id: "3", name: "Alice Johnson", age: 22, isStudent: true },
-    { id: "4", name: "Bob Brown", age: 28, isStudent: false },
+    { id: "1", name: "John", age: 30, active: true, role: "Admin" },
+    { id: "2", name: "Jane", age: 25, active: false, role: "User" },
   ],
 };
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <h1 className="m-3">Editable Table</h1>
-      <EditableTable tableData={tableData} />
-    </div>
+    <>
+      <div className="App">
+        <h1 className="m-3">Editable Table</h1>
+        <EditableTable tableData={tableData} />
+      </div>
+    </>
   );
 };
 

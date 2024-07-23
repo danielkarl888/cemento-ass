@@ -18,6 +18,7 @@ type Column = {
   type: string;
   width?: number;
   hidden?: boolean;
+  options?: string[]; // Add options for select type columns
 };
 
 type Row = {
@@ -76,7 +77,12 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
 
   const handleModalSave = () => {
     if (
-      columns.every((column) => column.type === "boolean" || newRow[column.id])
+      columns.every(
+        (column) =>
+          column.type === "boolean" ||
+          column.type === "select" ||
+          newRow[column.id]
+      )
     ) {
       const newRowId = (data.length + 1).toString();
       const newRowData = { id: newRowId, ...newRow };
@@ -93,9 +99,11 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
     setNewRow({ ...newRow, [columnId]: value });
   };
 
-  const renderCellValue = (value: any, type: string) => {
+  const renderCellValue = (value: any, type: string, options?: string[]) => {
     if (type === "boolean") {
       return value ? "✔️" : "❌";
+    } else if (type === "select") {
+      return value;
     }
     return value;
   };
@@ -184,6 +192,22 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
                           handleInputChange(column.id, e.target.checked)
                         }
                       />
+                    ) : column.type === "select" ? (
+                      <Form.Control
+                        as="select"
+                        value={newRow[column.id] || ""}
+                        onChange={(e) =>
+                          handleInputChange(column.id, e.target.value)
+                        }
+                      >
+                        <option value="">Select...</option>
+                        {column.options &&
+                          column.options.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                      </Form.Control>
                     ) : (
                       <Form.Control
                         type={column.type === "number" ? "number" : "text"}
@@ -247,6 +271,22 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
                             handleSave(row.id, column.id, e.target.checked)
                           }
                         />
+                      ) : column.type === "select" ? (
+                        <Form.Control
+                          as="select"
+                          value={row[column.id] || ""}
+                          onChange={(e) =>
+                            handleSave(row.id, column.id, e.target.value)
+                          }
+                        >
+                          <option value="None">Select...</option>
+                          {column.options &&
+                            column.options.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                        </Form.Control>
                       ) : (
                         <Form.Control
                           type={column.type === "number" ? "number" : "text"}
@@ -267,7 +307,11 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
                       )
                     ) : (
                       <span onDoubleClick={() => handleEdit(row.id, column.id)}>
-                        {renderCellValue(row[column.id], column.type)}
+                        {renderCellValue(
+                          row[column.id],
+                          column.type,
+                          column.options
+                        )}
                       </span>
                     )}
                   </td>

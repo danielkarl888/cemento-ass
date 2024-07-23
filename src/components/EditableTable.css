@@ -26,3 +26,30 @@
     overflow-x: auto;
   }
   
+  /* Customize the table and modal styles */
+.container {
+  margin-top: 20px;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.form-check {
+  display: inline-block;
+}
+
+.modal-dialog {
+  max-width: 80%;
+}
+
+.modal-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
+  
