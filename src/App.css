@@ -8,7 +8,7 @@ body, html {
   justify-content: center;
   align-items: flex-start;
   height: 100vh;
-  padding-top: 20px; /* Adjust the padding as needed */
+  padding-top: 20px;
 }
 
 .table-wrapper {
@@ -45,3 +45,11 @@ input {
 }
 
 
+.big{
+  background-color: #F8F8FF; /* Adjust the padding as needed */
+}
+.form-control{
+  width: fit-content;
+  block-size: fit-content;
+
+}

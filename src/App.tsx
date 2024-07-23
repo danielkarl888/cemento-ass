@@ -1,6 +1,5 @@
 import React from "react";
 import EditableTable from "./components/EditableTable";
-
 // Define sample data
 const tableData = {
   columns: [
@@ -24,9 +23,18 @@ const tableData = {
 const App: React.FC = () => {
   return (
     <>
-      <div className="App">
-        <h1 className="m-3">Editable Table</h1>
-        <EditableTable tableData={tableData} />
+      <div className="container">
+
+        <div className="row">
+          <div className="col-2"></div>
+          <div className="col">
+            <div className="App">
+              <h1 className="m-3 text-center">Cemento Table</h1>
+              <EditableTable tableData={tableData} />
+            </div>
+          </div>
+          <div className="col-2"></div>
+        </div>
       </div>
     </>
   );

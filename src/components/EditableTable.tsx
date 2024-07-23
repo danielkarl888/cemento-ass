@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Table,
-  Form,
-  Button,
-  Alert,
-  Container,
-  Row,
-  Col,
-  Modal,
-} from "react-bootstrap";
+import { Table,Form,Button,Alert,Container,Row,Col,Modal } from "react-bootstrap";
 import "./EditableTable.css"; // Import custom CSS file
 
 type Column = {
@@ -144,7 +135,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
   }, [data, sortConfig]);
 
   return (
-    <Container className="mt-4">
+    <Container className="mt-4 ">
       <Row className="mb-3">
         <Col>
           <Form>
@@ -234,7 +225,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
         </Modal.Footer>
       </Modal>
 
-      <Table striped bordered hover responsive>
+      <Table striped bordered hover responsive className="table-primary">
         <thead>
           <tr>
             {columns
