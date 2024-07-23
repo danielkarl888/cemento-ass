@@ -95,7 +95,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
 
   const renderCellValue = (value: any, type: string) => {
     if (type === "boolean") {
-      return value ? "Yes" : "No";
+      return value ? "✔️" : "❌";
     }
     return value;
   };
@@ -155,13 +155,12 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
         </Col>
       </Row>
 
+      {error && <Alert variant="danger">{error}</Alert>}
+
       <Row className="mb-3">
         <Col>
-          <Button
-            className="mt-3 btn btn-success btn-lg"
-            onClick={handleAddRow}
-          >
-            Add new Row
+          <Button className="mt-3" onClick={handleAddRow}>
+            Add Row
           </Button>
         </Col>
       </Row>
@@ -199,11 +198,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
               ))}
             </Row>
           </Form>
-          {error && (
-            <Alert variant="danger" className="mt-3">
-              {error}
-            </Alert>
-          )}
+          {error && <Alert variant="danger">{error}</Alert>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleModalClose}>
@@ -244,22 +239,32 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
                 .map((column) => (
                   <td key={column.id}>
                     {editMode[`${row.id}-${column.id}`] ? (
-                      <Form.Control
-                        type={column.type === "number" ? "number" : "text"}
-                        defaultValue={renderCellValue(
-                          row[column.id],
-                          column.type
-                        )}
-                        onBlur={(e) =>
-                          handleSave(
-                            row.id,
-                            column.id,
-                            column.type === "boolean"
-                              ? e.target.value === "Yes"
-                              : e.target.value
-                          )
-                        }
-                      />
+                      column.type === "boolean" ? (
+                        <Form.Check
+                          type="checkbox"
+                          checked={row[column.id] || false}
+                          onChange={(e) =>
+                            handleSave(row.id, column.id, e.target.checked)
+                          }
+                        />
+                      ) : (
+                        <Form.Control
+                          type={column.type === "number" ? "number" : "text"}
+                          defaultValue={renderCellValue(
+                            row[column.id],
+                            column.type
+                          )}
+                          onBlur={(e) =>
+                            handleSave(
+                              row.id,
+                              column.id,
+                              column.type === "boolean"
+                                ? e.target.value === "Yes"
+                                : e.target.value
+                            )
+                          }
+                        />
+                      )
                     ) : (
                       <span onDoubleClick={() => handleEdit(row.id, column.id)}>
                         {renderCellValue(row[column.id], column.type)}
