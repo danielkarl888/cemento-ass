@@ -28,7 +28,7 @@ const App: React.FC = () => {
           <div className="col-2"></div>
           <div className="col">
             <div className="App">
-              <h1 className="m-3 text-center">Cemento Table</h1>
+              <h1 className="m-3 text-center">Cemento Table 🏗</h1>
               <EditableTable tableData={tableData} />
             </div>
           </div>

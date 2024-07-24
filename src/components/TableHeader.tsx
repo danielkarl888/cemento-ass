@@ -30,7 +30,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 ? sortConfig.direction === "asc"
                   ? " 🔼" // Ascending sort indicator
                   : " 🔽" // Descending sort indicator
-                : " ↕"}{" "}
+                : "↕"}{" "}
               {/* Default sort indicator when no sorting is applied */}
             </th>
           ))}
