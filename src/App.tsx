@@ -1,5 +1,7 @@
 import React from "react";
 import EditableTable from "./components/EditableTable";
+import { Container, Navbar, Nav } from "react-bootstrap";
+
 // Define sample data
 const tableData = {
   columns: [
@@ -23,6 +25,8 @@ const tableData = {
 const App: React.FC = () => {
   return (
     <>
+      <Navbar bg="" data-bs-theme="dark" sticky="top" />
+
       <div className="container">
         <div className="row">
           <div className="col-2"></div>
