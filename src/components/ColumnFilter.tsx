@@ -13,13 +13,16 @@ const ColumnFilter: React.FC<ColumnFilterProps> = ({
 }) => {
   return (
     <Form>
+      {/* Loop through each column to create filter switches */}
       {columns.map((column) => (
         <Form.Switch
           key={column.id}
           type="checkbox"
           label={column.title}
-          checked={!column.hidden}
-          onChange={(e) => handleFilterChange(column.id, e.target.checked)}
+          checked={!column.hidden} // Show the column if not hidden
+          onChange={
+            (e) => handleFilterChange(column.id, e.target.checked) // Handle filter change
+          }
         />
       ))}
     </Form>

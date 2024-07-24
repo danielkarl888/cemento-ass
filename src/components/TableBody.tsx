@@ -21,14 +21,17 @@ const TableBody: React.FC<TableBodyProps> = ({
 }) => {
   return (
     <tbody>
+      {/* Map through each row of data */}
       {data.map((row) => (
         <tr key={row.id}>
           {columns
-            .filter((column) => !column.hidden)
+            .filter((column) => !column.hidden) // Filter out hidden columns
             .map((column) => (
               <td key={column.id}>
+                {/* Check if the cell is in edit mode */}
                 {editMode[`${row.id}-${column.id}`] ? (
                   column.type === "boolean" ? (
+                    // Render a checkbox for boolean type columns
                     <Form.Check
                       type="checkbox"
                       checked={row[column.id] || false}
@@ -37,6 +40,7 @@ const TableBody: React.FC<TableBodyProps> = ({
                       }
                     />
                   ) : column.type === "select" ? (
+                    // Render a select dropdown for select type columns
                     <Form.Control
                       as="select"
                       value={row[column.id] || "None"}
@@ -53,6 +57,7 @@ const TableBody: React.FC<TableBodyProps> = ({
                         ))}
                     </Form.Control>
                   ) : (
+                    // Render an input field for text and number type columns
                     <Form.Control
                       type={column.type === "number" ? "number" : "text"}
                       defaultValue={renderCellValue(
@@ -71,6 +76,7 @@ const TableBody: React.FC<TableBodyProps> = ({
                     />
                   )
                 ) : (
+                  // Render cell value as plain text and enable editing on double-click
                   <span onDoubleClick={() => handleEdit(row.id, column.id)}>
                     {renderCellValue(
                       row[column.id],

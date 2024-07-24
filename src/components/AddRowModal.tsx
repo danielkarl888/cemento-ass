@@ -29,11 +29,13 @@ const AddRowModal: React.FC<AddRowModalProps> = ({
       <Modal.Body>
         <Form>
           <Row>
+            {/* Loop through each column to create form inputs */}
             {columns.map((column) => (
               <Col key={column.id} xs={12} sm={6} md={4} lg={3}>
                 <Form.Group>
                   <Form.Label>{column.title}</Form.Label>
                   {column.type === "boolean" ? (
+                    // Checkbox for boolean columns
                     <Form.Check
                       type="checkbox"
                       checked={newRow[column.id] || false}
@@ -42,6 +44,7 @@ const AddRowModal: React.FC<AddRowModalProps> = ({
                       }
                     />
                   ) : column.type === "select" ? (
+                    // Select dropdown for select columns
                     <Form.Control
                       as="select"
                       value={newRow[column.id] || ""}
@@ -58,6 +61,7 @@ const AddRowModal: React.FC<AddRowModalProps> = ({
                         ))}
                     </Form.Control>
                   ) : (
+                    // Text or number input for other column types
                     <Form.Control
                       type={column.type === "number" ? "number" : "text"}
                       value={newRow[column.id] || ""}
@@ -71,9 +75,11 @@ const AddRowModal: React.FC<AddRowModalProps> = ({
             ))}
           </Row>
         </Form>
+        {/* Display error message if any */}
         {error && <Alert variant="danger">{error}</Alert>}
       </Modal.Body>
       <Modal.Footer>
+        {/* Buttons to close the modal or save the new row */}
         <Button variant="secondary" onClick={handleModalClose}>
           Close
         </Button>
