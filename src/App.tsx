@@ -24,7 +24,6 @@ const App: React.FC = () => {
   return (
     <>
       <div className="container">
-
         <div className="row">
           <div className="col-2"></div>
           <div className="col">

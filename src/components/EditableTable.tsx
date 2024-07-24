@@ -1,42 +1,18 @@
 import React, { useState } from "react";
-import {
-  Table,
-  Form,
-  Button,
-  Alert,
-  Container,
-  Row,
-  Col,
-  Modal,
-} from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import "./EditableTable.css"; // Import custom CSS file
-
-type Column = {
-  id: string;
-  ordinalNo: number;
-  title: string;
-  type: string;
-  width?: number;
-  hidden?: boolean;
-  options?: string[]; // Add options for select type columns
-};
-
-type Row = {
-  id: string;
-  [columnId: string]: any;
-};
-
-type TableData = {
-  columns: Column[];
-  data: Row[];
-};
-
+import { Column, Row as DataRow, TableData } from "./types";
+import TableHeader from "./TableHeader";
+import TableBody from "./TableBody";
+import ColumnFilter from "./ColumnFilter";
+import AddRowModal from "./AddRowModal";
+import { Table } from "react-bootstrap";
 type Props = {
   tableData: TableData;
 };
 
 const EditableTable: React.FC<Props> = ({ tableData }) => {
-  const [data, setData] = useState<Row[]>(tableData.data);
+  const [data, setData] = useState<DataRow[]>(tableData.data);
   const [columns, setColumns] = useState<Column[]>(tableData.columns);
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
   const [newRow, setNewRow] = useState<{ [key: string]: any }>({ id: "" });
@@ -76,7 +52,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
   };
 
   const handleModalSave = () => {
-    const newRowData: Row = { ...newRow, id: (data.length + 1).toString() };
+    const newRowData: DataRow = { ...newRow, id: (data.length + 1).toString() };
 
     columns.forEach((column) => {
       if (!newRowData[column.id] && column.type === "select") {
@@ -165,168 +141,37 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form>
-            {columns.map((column) => (
-              <Form.Switch
-                key={column.id}
-                type="checkbox"
-                label={column.title}
-                checked={!column.hidden}
-                onChange={(e) =>
-                  handleFilterChange(column.id, e.target.checked)
-                }
-              />
-            ))}
-          </Form>
+          <ColumnFilter
+            columns={columns}
+            handleFilterChange={handleFilterChange}
+          />
         </Col>
       </Row>
 
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Row</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Row>
-              {columns.map((column) => (
-                <Col key={column.id} xs={12} sm={6} md={4} lg={3}>
-                  <Form.Group>
-                    <Form.Label>{column.title}</Form.Label>
-                    {column.type === "boolean" ? (
-                      <Form.Check
-                        type="checkbox"
-                        checked={newRow[column.id] || false}
-                        onChange={(e) =>
-                          handleInputChange(column.id, e.target.checked)
-                        }
-                      />
-                    ) : column.type === "select" ? (
-                      <Form.Control
-                        as="select"
-                        value={newRow[column.id] || ""}
-                        onChange={(e) =>
-                          handleInputChange(column.id, e.target.value)
-                        }
-                      >
-                        <option value="None">Select...</option>
-                        {column.options &&
-                          column.options.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                      </Form.Control>
-                    ) : (
-                      <Form.Control
-                        type={column.type === "number" ? "number" : "text"}
-                        value={newRow[column.id] || ""}
-                        onChange={(e) =>
-                          handleInputChange(column.id, e.target.value)
-                        }
-                      />
-                    )}
-                  </Form.Group>
-                </Col>
-              ))}
-            </Row>
-          </Form>
-          {error && <Alert variant="danger">{error}</Alert>}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleModalSave}>
-            Save
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <AddRowModal
+        columns={columns}
+        newRow={newRow}
+        error={error}
+        showModal={showModal}
+        handleModalClose={handleModalClose}
+        handleModalSave={handleModalSave}
+        handleInputChange={handleInputChange}
+      />
 
       <Table striped bordered hover responsive className="table-primary">
-        <thead>
-          <tr>
-            {columns
-              .filter((column) => !column.hidden)
-              .map((column) => (
-                <th
-                  key={column.id}
-                  style={{ width: column.width, cursor: "pointer" }}
-                  onClick={() => handleSort(column.id)}
-                >
-                  {column.title}
-                  {sortConfig && sortConfig.key === column.id
-                    ? sortConfig.direction === "asc"
-                      ? " 🔼"
-                      : " 🔽"
-                    : " ↕"}
-                </th>
-              ))}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.map((row) => (
-            <tr key={row.id}>
-              {columns
-                .filter((column) => !column.hidden)
-                .map((column) => (
-                  <td key={column.id}>
-                    {editMode[`${row.id}-${column.id}`] ? (
-                      column.type === "boolean" ? (
-                        <Form.Check
-                          type="checkbox"
-                          checked={row[column.id] || false}
-                          onChange={(e) =>
-                            handleSave(row.id, column.id, e.target.checked)
-                          }
-                        />
-                      ) : column.type === "select" ? (
-                        <Form.Control
-                          as="select"
-                          value={row[column.id] || "None"}
-                          onChange={(e) =>
-                            handleSave(row.id, column.id, e.target.value)
-                          }
-                        >
-                          <option value="None">Select...</option>
-                          {column.options &&
-                            column.options.map((option) => (
-                              <option key={option} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                        </Form.Control>
-                      ) : (
-                        <Form.Control
-                          type={column.type === "number" ? "number" : "text"}
-                          defaultValue={renderCellValue(
-                            row[column.id],
-                            column.type
-                          )}
-                          onBlur={(e) =>
-                            handleSave(
-                              row.id,
-                              column.id,
-                              column.type === "boolean"
-                                ? e.target.value === "Yes"
-                                : e.target.value
-                            )
-                          }
-                        />
-                      )
-                    ) : (
-                      <span onDoubleClick={() => handleEdit(row.id, column.id)}>
-                        {renderCellValue(
-                          row[column.id],
-                          column.type,
-                          column.options
-                        )}
-                      </span>
-                    )}
-                  </td>
-                ))}
-            </tr>
-          ))}
-        </tbody>
+        <TableHeader
+          columns={columns}
+          sortConfig={sortConfig}
+          handleSort={handleSort}
+        />
+        <TableBody
+          columns={columns}
+          data={sortedData}
+          editMode={editMode}
+          handleEdit={handleEdit}
+          handleSave={handleSave}
+          renderCellValue={renderCellValue}
+        />
       </Table>
     </Container>
   );

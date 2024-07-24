@@ -1,18 +1,20 @@
-export interface Column {
+export type Column = {
     id: string;
     ordinalNo: number;
     title: string;
     type: string;
     width?: number;
-  }
+    hidden?: boolean;
+    options?: string[];
+  };
   
-  export interface Row {
+  export type Row = {
     id: string;
     [columnId: string]: any;
-  }
+  };
   
-  export interface TableData {
+  export type TableData = {
     columns: Column[];
     data: Row[];
-  }
+  };
   
