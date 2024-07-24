@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Table,Form,Button,Alert,Container,Row,Col,Modal } from "react-bootstrap";
+import {
+  Table,
+  Form,
+  Button,
+  Alert,
+  Container,
+  Row,
+  Col,
+  Modal,
+} from "react-bootstrap";
 import "./EditableTable.css"; // Import custom CSS file
 
 type Column = {
@@ -30,7 +39,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
   const [data, setData] = useState<Row[]>(tableData.data);
   const [columns, setColumns] = useState<Column[]>(tableData.columns);
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
-  const [newRow, setNewRow] = useState<{ [key: string]: any }>({});
+  const [newRow, setNewRow] = useState<{ [key: string]: any }>({ id: "" });
   const [error, setError] = useState<string | null>(null);
   const [sortConfig, setSortConfig] = useState<{
     key: string;
@@ -67,18 +76,24 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
   };
 
   const handleModalSave = () => {
+    const newRowData: Row = { ...newRow, id: (data.length + 1).toString() };
+
+    columns.forEach((column) => {
+      if (!newRowData[column.id] && column.type === "select") {
+        newRowData[column.id] = "None";
+      }
+    });
+
     if (
       columns.every(
         (column) =>
           column.type === "boolean" ||
           column.type === "select" ||
-          newRow[column.id]
+          newRowData[column.id]
       )
     ) {
-      const newRowId = (data.length + 1).toString();
-      const newRowData = { id: newRowId, ...newRow };
       setData([...data, newRowData]);
-      setNewRow({});
+      setNewRow({ id: "" });
       setShowModal(false);
       setError(null);
     } else {
@@ -138,9 +153,21 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
     <Container className="mt-4 ">
       <Row className="mb-3">
         <Col>
+          <Button
+            variant="primary"
+            size="lg"
+            className="mt-3"
+            onClick={handleAddRow}
+          >
+            Add Row
+          </Button>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col>
           <Form>
             {columns.map((column) => (
-              <Form.Check
+              <Form.Switch
                 key={column.id}
                 type="checkbox"
                 label={column.title}
@@ -151,16 +178,6 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
               />
             ))}
           </Form>
-        </Col>
-      </Row>
-
-      {error && <Alert variant="danger">{error}</Alert>}
-
-      <Row className="mb-3">
-        <Col>
-          <Button className="mt-3" onClick={handleAddRow}>
-            Add Row
-          </Button>
         </Col>
       </Row>
 
@@ -191,7 +208,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
                           handleInputChange(column.id, e.target.value)
                         }
                       >
-                        <option value="">Select...</option>
+                        <option value="None">Select...</option>
                         {column.options &&
                           column.options.map((option) => (
                             <option key={option} value={option}>
@@ -265,7 +282,7 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
                       ) : column.type === "select" ? (
                         <Form.Control
                           as="select"
-                          value={row[column.id] || ""}
+                          value={row[column.id] || "None"}
                           onChange={(e) =>
                             handleSave(row.id, column.id, e.target.value)
                           }
