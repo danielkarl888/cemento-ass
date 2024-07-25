@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Dropdown, DropdownButton, Form } from "react-bootstrap";
 import { Column } from "./types";
 
 type ColumnFilterProps = {
@@ -12,20 +12,22 @@ const ColumnFilter: React.FC<ColumnFilterProps> = ({
   handleFilterChange,
 }) => {
   return (
-    <Form>
-      {/* Loop through each column to create filter switches */}
+    <DropdownButton id="column-filter-dropdown" title="Filter Columns">
       {columns.map((column) => (
-        <Form.Switch
+        <Dropdown.ItemText
           key={column.id}
-          type="checkbox"
-          label={column.title}
-          checked={!column.hidden} // Show the column if not hidden
-          onChange={
-            (e) => handleFilterChange(column.id, e.target.checked) // Handle filter change
-          }
-        />
+          as="div"
+          className="dropdown-item-no-click"
+        >
+          <Form.Switch
+            type="checkbox"
+            label={column.title}
+            checked={!column.hidden}
+            onChange={(e) => handleFilterChange(column.id, e.target.checked)}
+          />
+        </Dropdown.ItemText>
       ))}
-    </Form>
+    </DropdownButton>
   );
 };
 
