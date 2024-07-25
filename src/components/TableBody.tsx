@@ -19,20 +19,33 @@ const TableBody: React.FC<TableBodyProps> = ({
   handleSave,
   renderCellValue,
 }) => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+    rowId: string,
+    columnId: string,
+    value: any
+  ) => {
+    if (e.key === "Enter") {
+      handleSave(rowId, columnId, value);
+    }
+  };
+
   return (
     <tbody>
-      {/* Map through each row of data */}
       {data.map((row) => (
         <tr key={row.id}>
           {columns
-            .filter((column) => !column.hidden) // Filter out hidden columns
+            .filter((column) => !column.hidden)
             .map((column) => (
-              <td key={column.id}>
-                {/* Check if the cell is in edit mode */}
+              <td
+                key={column.id}
+                onDoubleClick={() => handleEdit(row.id, column.id)}
+              >
                 {editMode[`${row.id}-${column.id}`] ? (
                   column.type === "boolean" ? (
-                    // Render a checkbox for boolean type columns
-                    <Form.Check
+                    <Form.Switch
                       type="checkbox"
                       checked={row[column.id] || false}
                       onChange={(e) =>
@@ -40,12 +53,22 @@ const TableBody: React.FC<TableBodyProps> = ({
                       }
                     />
                   ) : column.type === "select" ? (
-                    // Render a select dropdown for select type columns
                     <Form.Control
                       as="select"
                       value={row[column.id] || "None"}
                       onChange={(e) =>
                         handleSave(row.id, column.id, e.target.value)
+                      }
+                      onBlur={(e) =>
+                        handleSave(row.id, column.id, e.target.value)
+                      }
+                      onKeyDown={(e) =>
+                        handleKeyDown(
+                          e as unknown as React.KeyboardEvent<HTMLSelectElement>,
+                          row.id,
+                          column.id,
+                          (e.target as HTMLSelectElement).value
+                        )
                       }
                     >
                       <option value="None">Select...</option>
@@ -57,7 +80,6 @@ const TableBody: React.FC<TableBodyProps> = ({
                         ))}
                     </Form.Control>
                   ) : (
-                    // Render an input field for text and number type columns
                     <Form.Control
                       type={column.type === "number" ? "number" : "text"}
                       defaultValue={renderCellValue(
@@ -73,11 +95,18 @@ const TableBody: React.FC<TableBodyProps> = ({
                             : e.target.value
                         )
                       }
+                      onKeyDown={(e) =>
+                        handleKeyDown(
+                          e as React.KeyboardEvent<HTMLInputElement>,
+                          row.id,
+                          column.id,
+                          e.currentTarget.value
+                        )
+                      }
                     />
                   )
                 ) : (
-                  // Render cell value as plain text and enable editing on double-click
-                  <span onDoubleClick={() => handleEdit(row.id, column.id)}>
+                  <span>
                     {renderCellValue(
                       row[column.id],
                       column.type,

@@ -129,18 +129,6 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
     <Container className="mt-4">
       <Row className="mb-3">
         <Col>
-          <Button
-            variant="primary"
-            size="lg"
-            className="mt-3"
-            onClick={handleAddRow}
-          >
-            Add Row
-          </Button>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col>
           <ColumnFilter
             columns={columns}
             handleFilterChange={handleFilterChange}
@@ -173,6 +161,18 @@ const EditableTable: React.FC<Props> = ({ tableData }) => {
           renderCellValue={renderCellValue}
         />
       </Table>
+      <Row>
+        <Col>
+          <Button
+            variant="primary"
+            size="lg"
+            className="mt-3"
+            onClick={handleAddRow}
+          >
+            Add new Row ✎
+          </Button>
+        </Col>
+      </Row>
     </Container>
   );
 };

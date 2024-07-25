@@ -1,6 +1,6 @@
 import React from "react";
 import { Column } from "./types";
-
+import "./table.css"
 type TableHeaderProps = {
   columns: Column[];
   sortConfig: { key: string; direction: "asc" | "desc" } | null;
@@ -20,8 +20,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           .filter((column) => !column.hidden) // Filter out hidden columns
           .map((column) => (
             <th
+            className="header-filter"
               key={column.id}
-              style={{ width: column.width, cursor: "pointer" }} // Set column width and cursor style
+              style={{ width: column.width}} // Set column width and cursor style
               onClick={() => handleSort(column.id)} // Handle sorting when header is clicked
             >
               {column.title}

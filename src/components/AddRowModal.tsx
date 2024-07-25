@@ -36,7 +36,7 @@ const AddRowModal: React.FC<AddRowModalProps> = ({
                   <Form.Label>{column.title}</Form.Label>
                   {column.type === "boolean" ? (
                     // Checkbox for boolean columns
-                    <Form.Check
+                    <Form.Switch
                       type="checkbox"
                       checked={newRow[column.id] || false}
                       onChange={(e) =>
