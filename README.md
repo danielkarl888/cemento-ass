@@ -12,7 +12,8 @@ This project is a React component for an editable table, allowing users to add, 
 
 ## Demo
 
-![image](https://github.com/user-attachments/assets/c3b00913-3ae5-4221-b767-f4c9f1678af3)
+![ScreenRecording2024-07-28193604-ezgif com-optimize](https://github.com/user-attachments/assets/d7387ea3-93ef-44f9-96e2-ecab92607815)
+
 
 
 ## Table of Contents
