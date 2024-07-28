@@ -16,7 +16,8 @@ This project is a React component for an editable table, allowing users to add, 
 
 ## Demo
 
-![Demo GIF or Screenshot](link-to-your-demo-image-or-gif)
+![image](https://github.com/user-attachments/assets/c3b00913-3ae5-4221-b767-f4c9f1678af3)
+
 
 ## Table of Contents
 
@@ -31,11 +32,11 @@ This project is a React component for an editable table, allowing users to add, 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/your-repo-name.git
+    git clone https://github.com/danielkarl888/cemento-ass.git
     ```
 2. Navigate to the project directory:
     ```sh
-    cd your-repo-name
+    cd cemento-ass
     ```
 3. Install dependencies:
     ```sh
