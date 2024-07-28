@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Form } from "react-bootstrap";
-import { Column, Row } from "./types";
+import { Column, Row } from "../type/table_types";
 
 type TableBodyProps = {
   columns: Column[];

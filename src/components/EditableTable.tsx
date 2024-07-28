@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
-import "./EditableTable.css";
-import { Column, Row as DataRow, TableData } from "./types";
+import "../style/EditableTable.css";
+import { Column, Row as DataRow, TableData } from "../type/table_types";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import ColumnFilter from "./ColumnFilter";

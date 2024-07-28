@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Form, Button, Alert, Row, Col } from "react-bootstrap";
-import { Column } from "./types";
+import { Column } from "../type/table_types";
 
 type AddRowModalProps = {
   columns: Column[];

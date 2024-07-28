@@ -1,6 +1,6 @@
 import React from "react";
 import { Dropdown, DropdownButton, Form } from "react-bootstrap";
-import { Column } from "./types";
+import { Column } from "../type/table_types";
 
 type ColumnFilterProps = {
   columns: Column[];
