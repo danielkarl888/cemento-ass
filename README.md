@@ -28,7 +28,7 @@ This project is a React component for an editable table, allowing users to add, 
 
 1. Clone the repository:
     ```sh
-    git clone [https://github.com/danielkarl888/cemento-ass.git](https://github.com/danielkarl888/cemento-ass.git)
+    git clone https://github.com/danielkarl888/cemento-ass.git
     ```
 2. Navigate to the project directory:
     ```sh
