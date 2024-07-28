@@ -21,8 +21,6 @@ This project is a React component for an editable table, allowing users to add, 
 - [Usage](#usage)
 - [Components](#components)
 - [Props](#props)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
@@ -131,28 +129,3 @@ Renders the table body with editable cells.
 - `handleEdit`: Function to handle editing of cells.
 - `handleSave`: Function to handle saving of cell values.
 - `renderCellValue`: Function to render the cell value based on its type.
-
-## Contributing
-
-1. Fork the repository.
-2. Create your feature branch:
-    ```sh
-    git checkout -b feature/your-feature-name
-    ```
-3. Commit your changes:
-    ```sh
-    git commit -m 'Add your feature'
-    ```
-4. Push to the branch:
-    ```sh
-    git push origin feature/your-feature-name
-    ```
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to replace placeholders such as `your-username` and `your-repo-name` with your actual GitHub username and repository name. Add any additional sections or details as necessary.
