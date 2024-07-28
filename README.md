@@ -1,7 +1,3 @@
-Certainly! Below is a README template for your project, outlining its purpose, installation instructions, usage, and more. You can customize it further based on your specific needs.
-
----
-
 # Editable Table React Component
 
 This project is a React component for an editable table, allowing users to add, edit, and filter table rows dynamically. The component is built using React and Bootstrap for a clean and responsive UI.
@@ -32,7 +28,7 @@ This project is a React component for an editable table, allowing users to add, 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/danielkarl888/cemento-ass.git
+    git clone [https://github.com/danielkarl888/cemento-ass.git](https://github.com/danielkarl888/cemento-ass.git)
     ```
 2. Navigate to the project directory:
     ```sh
